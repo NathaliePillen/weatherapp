@@ -26,11 +26,14 @@ window.addEventListener('load', () => {
                         if (i === 0) {
                             let first = data.list[i].main.temp;
                             console.log(first);
-                            document.querySelector(".temperature.degree-section.temperature-degree").innerHTML = "first";
+                            let temp1 = document.querySelector(".temperatureDegree1");
+                            temp1.innerHTML = first;
                         }
                         if (i === 8) {
                             let second = data.list[i].main.temp;
                             console.log(second);
+                            let temp2 = document.querySelector(".temperatureDegree2");
+                            temp2.innerHTML = second;
                         }
                     }
 
