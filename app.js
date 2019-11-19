@@ -1,10 +1,6 @@
 window.addEventListener('load', () => {
     let long;
     let latitude;
-    let temparatureDescription = document.querySelector('.temperature-discription');
-    let temperatureDegree = document.querySelector('temperature-degree');
-    let locationTimezone = document.querySelector('temperature-timezone');
-
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -21,8 +17,11 @@ window.addEventListener('load', () => {
                     console.log(data);
                     console.log(data.list.length);
 
+                    let location = data.city.id;
+                    console.log(location);
+
+
                     for (i = 0; i < data.list.length; i++) {
-                        console.log(i);
                         if (i === 0) {
                             let first = data.list[i].main.temp;
                             console.log(first);
