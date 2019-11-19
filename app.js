@@ -1,44 +1,38 @@
-window.addEventListener('load', () => {
-    let long;
-    let latitude;
+const key = "911d0657f9e0a1f3676c3a63ad19ce49";
+let api = `http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=${key}`;
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            long = position.coords.longitude;
-            lat = position.coords.latitude;
-
-            const api = `http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=911d0657f9e0a1f3676c3a63ad19ce49`;
-
-            fetch(api)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data);
-                    console.log(data.list.length);
-
-                    let location = data.city.id;
-                    console.log(location);
+let calculateWeather = document.getElementById("getWeather")
 
 
-                    for (i = 0; i < data.list.length; i++) {
-                        if (i === 0) {
-                            let first = data.list[i].main.temp;
-                            console.log(first);
-                            let temp1 = document.querySelector(".temperatureDegree1");
-                            temp1.innerHTML = first;
-                        }
-                        if (i === 8) {
-                            let second = data.list[i].main.temp;
-                            console.log(second);
-                            let temp2 = document.querySelector(".temperatureDegree2");
-                            temp2.innerHTML = second;
-                        }
-                    }
+calculateWeather.addEventListener(("click"), function() {
+    let locationEllement = document.getElementById("locationLabel").value;
+    let cityName = `http://api.openweathermap.org/data/2.5/forecast?q=${locationEllement}&APPID=${key}`;
 
-                });
-        });
-    }
+    fetch(cityName)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            console.log(data.list.length);
+            return data.list;
+        })
+        .then(list => {
+            for (i = 0; i < list.length; i++) {
+                if (i === 0) {
+                    let temp = list[i].main.temp;
+                    console.log(temp);
+                    let tempElement = document.querySelector(".temperatureDegree1");
+                    tempElement.innerHTML = temp;
+                }
+                if (i === 8) {
+                    let temp = list[i].main.temp;
+                    console.log(temp);
+                    let tempElement = document.querySelector(".temperatureDegree2");
+                    tempElement.innerHTML = temp;
+                }
+            }
+        })
+        .catch(error => console.log(error))
 
-
-});
+})
